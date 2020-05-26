@@ -28,5 +28,10 @@ namespace Tweak
             Program.GetRegistryValue(EnumKnownRegistry.NoThemesTab).SetValue((uint) (LockTheme ? 1 : 0));
             Program.GetRegistryValue(EnumKnownRegistry.NoChangingWallPaper).SetValue((uint) (LockWallpaper ? 1 : 0));
         }
+
+        public override string ToString()
+        {
+            return "Обслуживание темы оформления";
+        }
     }
 }

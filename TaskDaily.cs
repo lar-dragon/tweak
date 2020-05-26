@@ -28,5 +28,10 @@ namespace Tweak
         {
             _task.Enabled = Active;
         }
+
+        public override string ToString()
+        {
+            return "Добавление ежедневного запуска";
+        }
     }
 }

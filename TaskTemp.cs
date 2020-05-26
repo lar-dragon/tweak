@@ -36,5 +36,10 @@ namespace Tweak
                 foreach (var file in _cacheFiles)
                     file.Delete();
         }
+
+        public override string ToString()
+        {
+            return "Обслуживание врекменных файлов";
+        }
     }
 }

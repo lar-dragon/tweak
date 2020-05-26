@@ -49,5 +49,10 @@ namespace Tweak
             }
             _directoryInfo.Attributes &= Readonly ? FileAttributes.ReadOnly : ~FileAttributes.ReadOnly;
         }
+
+        public override string ToString()
+        {
+            return "Обслуживание директории " + _directoryInfo.Name;
+        }
     }
 }
