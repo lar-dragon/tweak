@@ -19,7 +19,10 @@ namespace Tweak
                 var items = arg.Split("=".ToCharArray(), 2, StringSplitOptions.RemoveEmptyEntries);
                 var name = items.First();
                 var value = string.Join(" ", items.Skip(1).ToList());
-                var property = Config.GetType().GetProperty(name);
+                var property = Config.GetType()
+                    .GetProperties()
+                    .First(a => a.GetCustomAttributes(typeof(Argument), true)
+                        .First(b => b.ToString() == name) != null);
                 if (property != null)
                 {
                     property.SetValue(
