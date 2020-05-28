@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 
 namespace Tweak
@@ -16,10 +17,13 @@ namespace Tweak
             {
                 new Process
                 {
-                    EnableRaisingEvents = false, StartInfo =
+                    EnableRaisingEvents = false,
+                    StartInfo =
                     {
                         FileName = "rundll32.exe",
-                        Arguments = "%SystemRoot%\\system32\\shell32.dll,Control_RunDLL %SystemRoot%\\system32\\desk.cpl desk,@Themes /Action:OpenTheme /file:\"%SystemRoot%\\Resources\\Themes\\aero.theme\"",
+                        Arguments = "themecpl.dll,OpenThemeAction "
+                                    + Environment.GetFolderPath(Environment.SpecialFolder.Windows)
+                                    + "\\Resources\\Themes\\aero.theme",
                         UseShellExecute = true
                     }
                 }.Start();

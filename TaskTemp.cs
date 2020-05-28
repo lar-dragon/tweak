@@ -9,7 +9,7 @@ namespace Tweak
         private IEnumerable<FileInfo> _tempFiles;
         private IEnumerable<FileInfo> _cacheFiles;
         
-        private ulong _weight;
+        private ulong _weight = 0;
         public ulong Weight => _weight;
         
         public bool ClearTemp { get; set; }
@@ -24,8 +24,8 @@ namespace Tweak
                 .Aggregate<FileInfo, ulong>(0, (current, fileInfo) => current + (ulong) fileInfo.Length);
             _cacheFiles = Program.GetDirectoryInfo(EnumKnownFolder.InternetCache)
                 .EnumerateFiles("*", SearchOption.AllDirectories);
-            _weight += _cacheFiles
-                .Aggregate<FileInfo, ulong>(0, (current, fileInfo) => current + (ulong) fileInfo.Length);
+            //_weight += _cacheFiles
+            //    .Aggregate<FileInfo, ulong>(0, (current, fileInfo) => current + (ulong) fileInfo.Length);
         }
         public void Apply()
         {
