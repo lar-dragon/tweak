@@ -33,7 +33,8 @@ namespace Tweak
 
         public void Apply()
         {
-            _task.Enabled = Active;
+            if (_task != null)
+                _task.Enabled = Active;
         }
 
         public override string ToString()

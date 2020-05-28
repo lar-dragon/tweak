@@ -9,21 +9,21 @@ namespace Tweak
             = EnumDesktopAction.Nothing;
         
         public bool DesktopReadonly { get; set; }
-            = (Program.GetDirectoryInfo(EnumKnownFolder.Desktop).Attributes & FileAttributes.ReadOnly) == 0;
+            = Program.GetDirectoryInfo(EnumKnownFolder.Desktop).Attributes.HasFlag(FileAttributes.ReadOnly);
 
         public EnumFilesAction DownloadsAction { get; set; }
             = EnumFilesAction.Nothing;
         
         public bool DownloadsReadonly { get; set; }
-            = (Program.GetDirectoryInfo(EnumKnownFolder.Downloads).Attributes & FileAttributes.ReadOnly) == 0;
+            = Program.GetDirectoryInfo(EnumKnownFolder.Downloads).Attributes.HasFlag(FileAttributes.ReadOnly);
         
         public EnumFilesAction OthersAction { get; set; }
             = EnumFilesAction.Nothing;
         
         public bool OthersReadonly { get; set; }
-            = (Program.GetDirectoryInfo(EnumKnownFolder.Documents).Attributes & FileAttributes.ReadOnly) == 0
-              | (Program.GetDirectoryInfo(EnumKnownFolder.Pictures).Attributes & FileAttributes.ReadOnly) == 0
-              | (Program.GetDirectoryInfo(EnumKnownFolder.Music).Attributes & FileAttributes.ReadOnly) == 0;
+            = Program.GetDirectoryInfo(EnumKnownFolder.Documents).Attributes.HasFlag(FileAttributes.ReadOnly)
+              | Program.GetDirectoryInfo(EnumKnownFolder.Pictures).Attributes.HasFlag(FileAttributes.ReadOnly)
+              | Program.GetDirectoryInfo(EnumKnownFolder.Music).Attributes.HasFlag(FileAttributes.ReadOnly);
 
         public EnumThemeAction ThemeAction { get; set; }
             = EnumThemeAction.Nothing;

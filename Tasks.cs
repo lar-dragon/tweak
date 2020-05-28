@@ -14,7 +14,7 @@ namespace Tweak
             AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Desktop))
             {
                 Delete = config.DesktopAction != EnumDesktopAction.Move
-                         || config.DesktopAction != EnumDesktopAction.Nothing,
+                         && config.DesktopAction != EnumDesktopAction.Nothing,
                 Move = config.DesktopAction == EnumDesktopAction.DeleteOldAndMove
                        || config.DesktopAction == EnumDesktopAction.Move,
                 ByDate = config.DesktopAction == EnumDesktopAction.DeleteOld

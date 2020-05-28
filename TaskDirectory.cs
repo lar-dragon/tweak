@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Security.Permissions;
+using System.Security.Principal;
 
 namespace Tweak
 {
@@ -34,7 +36,7 @@ namespace Tweak
         public void Apply()
         {
             var date = DateTime.Now.AddDays(Older);
-            _directoryInfo.Attributes &= ~FileAttributes.ReadOnly;
+            File.SetAttributes(_directoryInfo.FullName, _directoryInfo.Attributes & ~FileAttributes.ReadOnly);
             foreach (var file in _files)
             {
                 if (
@@ -52,7 +54,26 @@ namespace Tweak
                     file.MoveTo(Program.GetDirectoryInfo(EnumKnownFolder.Documents).FullName);
                 }
             }
-            _directoryInfo.Attributes &= Readonly ? FileAttributes.ReadOnly : ~FileAttributes.ReadOnly;
+            var user = WindowsIdentity.GetCurrent().User;
+            if (user == null) return;
+            var rule = new FileSystemAccessRule(
+                user,
+                FileSystemRights.CreateFiles | FileSystemRights.CreateDirectories | FileSystemRights.WriteData,
+                AccessControlType.Deny
+            );
+            if (Readonly)
+            {
+                File.SetAttributes(_directoryInfo.FullName, _directoryInfo.Attributes | FileAttributes.ReadOnly);
+                var access = _directoryInfo.GetAccessControl();
+                access.AddAccessRule(rule);
+                _directoryInfo.SetAccessControl(access);
+            }
+            else
+            {
+                var access = _directoryInfo.GetAccessControl();
+                access.RemoveAccessRuleSpecific(rule);
+                _directoryInfo.SetAccessControl(access);
+            }
         }
 
         public override string ToString()
