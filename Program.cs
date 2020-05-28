@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
-using Microsoft.Win32.TaskScheduler;
 
 namespace Tweak
 {
     internal static class Program
     {
         public const string TaskName = "Tweak";
-        
-        public static readonly TaskService TaskService = new TaskService();
         
         private static readonly Dictionary<EnumKnownRegistry, RegistryValue> RegistryValues
             = new Dictionary<EnumKnownRegistry, RegistryValue>

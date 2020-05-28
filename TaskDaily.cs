@@ -1,40 +1,56 @@
-using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
-using Microsoft.Win32.TaskScheduler;
 
 namespace Tweak
 {
     public class TaskDaily : ITask
     {
-        private readonly Task _task;
-    
+        private readonly string _args; 
+        
         public ulong Weight { get; } = 4;
 
         public bool Active { get; set; }
         
         public TaskDaily(string args)
         {
-            try
-            {
-                _task = Program.TaskService.FindTask(Program.TaskName);
-                if (_task != null) return;
-                _task = Program.TaskService.AddTask(
-                    Program.TaskName,
-                    QuickTriggerType.Daily,
-                    Application.ExecutablePath,
-                    args
-                );
-            }
-            catch
-            {
-                //
-            }
+            _args = args;
         }
 
         public void Apply()
         {
-            if (_task != null)
-                _task.Enabled = Active;
+            new Process
+            {
+                EnableRaisingEvents = false,
+                StartInfo =
+                {
+                    FileName = "schtasks.exe",
+                    Arguments = "/delete /tn " + Program.TaskName + " /f",
+                    UseShellExecute = true
+                }
+            }.Start();
+            
+            if (Active)
+            {
+                var f = new FileInfo(Application.ExecutablePath);
+                var p = new Process
+                {
+                    EnableRaisingEvents = false,
+                    StartInfo =
+                    {
+                        FileName = "schtasks.exe",
+                        Arguments = "/create /sc daily /tn "
+                                    + Program.TaskName
+                                    + " /tr \""
+                                    + f.Name
+                                    + " "
+                                    + _args
+                                    + "\"",
+                        UseShellExecute = true,
+                        CreateNoWindow = true
+                    }
+                }.Start();
+            }
         }
 
         public override string ToString()
