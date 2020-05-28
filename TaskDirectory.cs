@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
 
 namespace Tweak
 {
@@ -10,10 +11,8 @@ namespace Tweak
         private readonly DirectoryInfo _directoryInfo;
         
         private readonly IEnumerable<FileInfo> _files;
-                
-        private readonly ulong _weight;
 
-        public ulong Weight => _weight;
+        public ulong Weight { get; }
 
         public bool Readonly { get; set; }
         
@@ -29,7 +28,7 @@ namespace Tweak
         {
             _directoryInfo = directoryInfo;
             _files = directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories);
-            _weight = _files.Aggregate<FileInfo, ulong>(0, (current, fileInfo) => current + (ulong) fileInfo.Length);
+            Weight = _files.Aggregate<FileInfo, ulong>(0, (current, fileInfo) => current + (ulong) fileInfo.Length);
         }
         
         public void Apply()
@@ -38,7 +37,13 @@ namespace Tweak
             _directoryInfo.Attributes &= ~FileAttributes.ReadOnly;
             foreach (var file in _files)
             {
-                if (Delete && (!ByDate || file.LastWriteTimeUtc < date))
+                if (
+                    file.Attributes.HasFlag(FileAttributes.ReadOnly)
+                    || file.Attributes.HasFlag(FileAttributes.System)
+                    || file.Attributes.HasFlag(FileAttributes.Hidden)
+                ) continue;
+
+                if (Delete && (!ByDate || file.LastWriteTime < date))
                 {
                     file.Delete();
                 }

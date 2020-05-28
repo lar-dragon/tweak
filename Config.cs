@@ -1,6 +1,3 @@
-using System;
-using System.ComponentModel;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 
@@ -32,16 +29,14 @@ namespace Tweak
             = EnumThemeAction.Nothing;
 
         public bool ThemeLock { get; set; }
-            = (uint) Program.GetRegistryValue(EnumKnownRegistry.NoThemesTab).GetValue() != 0;
+            = Program.GetRegistryValue(EnumKnownRegistry.NoThemesTab).GetValue<uint>() != 0;
         
         public bool ThemeLockPicture { get; set; }
-            = (uint) Program.GetRegistryValue(EnumKnownRegistry.NoChangingWallPaper).GetValue() != 0;
+            = Program.GetRegistryValue(EnumKnownRegistry.NoChangingWallPaper).GetValue<uint>() != 0;
 
         public bool TempDelete { get; set; }
-            = false;
 
         public bool TempDeleteHistory { get; set; }
-            = false;
 
         public bool Daily { get; set; }
             = Program.TaskService.FindTask(Program.TaskName)?.Enabled ?? false;

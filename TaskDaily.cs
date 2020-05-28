@@ -1,5 +1,4 @@
-
-
+using System;
 using System.Windows.Forms;
 using Microsoft.Win32.TaskScheduler;
 
@@ -15,13 +14,21 @@ namespace Tweak
         
         public TaskDaily(string args)
         {
-            _task = Program.TaskService.FindTask(Program.TaskName);
-            if (_task != null) return;
-            var taskDefinition = Program.TaskService.NewTask();
-            taskDefinition.RegistrationInfo.Description = Program.TaskName;
-            taskDefinition.Triggers.Add(new DailyTrigger { DaysInterval = 1 });
-            taskDefinition.Actions.Add(new ExecAction(Application.ExecutablePath, args));
-            _task = Program.TaskService.RootFolder.RegisterTaskDefinition(Program.TaskName, taskDefinition);
+            try
+            {
+                _task = Program.TaskService.FindTask(Program.TaskName);
+                if (_task != null) return;
+                _task = Program.TaskService.AddTask(
+                    Program.TaskName,
+                    QuickTriggerType.Daily,
+                    Application.ExecutablePath,
+                    args
+                );
+            }
+            catch
+            {
+                //
+            }
         }
 
         public void Apply()

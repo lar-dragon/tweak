@@ -1,4 +1,3 @@
-using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,7 +11,7 @@ namespace Tweak
 
         public Tasks(Config config)
         {
-            /*AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Desktop))
+            AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Desktop))
             {
                 Delete = config.DesktopAction != EnumDesktopAction.Move
                          || config.DesktopAction != EnumDesktopAction.Nothing,
@@ -52,7 +51,7 @@ namespace Tweak
                 ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
                 Readonly = config.OthersReadonly,
                 Older = -14
-            });*/
+            });
             
             AddTask(new TaskTheme
             {
@@ -61,7 +60,7 @@ namespace Tweak
                 SetDefault = config.ThemeAction == EnumThemeAction.Default
             });
             
-            /*AddTask(new TaskTemp
+            AddTask(new TaskTemp
             {
                 ClearTemp = config.TempDelete,
                 ClearCache = config.TempDeleteHistory
@@ -70,7 +69,7 @@ namespace Tweak
             AddTask(new TaskDaily(config.ToString())
             {
                 Active = config.Daily
-            });*/
+            });
         }
 
         private void AddTask(ITask task)

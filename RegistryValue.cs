@@ -13,12 +13,13 @@ namespace Tweak
             _defaultValue = defaultValue;
         }
 
-        public object GetValue()
+        public T GetValue<T>()
         {
-            return Registry.CurrentUser.GetValue(_name, _defaultValue);
+            var o = Registry.CurrentUser.GetValue(_name, _defaultValue);
+            return o is T t ? t : default;
         }
 
-        public void SetValue(object value)
+        public void SetValue<T>(T value)
         {
             Registry.CurrentUser.SetValue(_name, value);
         }

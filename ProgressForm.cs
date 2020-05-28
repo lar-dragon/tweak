@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -7,7 +6,7 @@ namespace Tweak
 {
     public partial class ProgressForm : Form
     {
-        private Config _config;
+        private readonly Config _config;
 
         public ProgressForm() : this(new Config())
         {}
