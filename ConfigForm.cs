@@ -27,7 +27,7 @@ namespace Tweak
                 {EnumDesktopAction.DeleteAll, DesktopDeleteAll},
                 {EnumDesktopAction.DeleteOld, DesktopDeleteOld},
                 {EnumDesktopAction.DeleteOldAndMove, DesktopDeleteOldAndMove},
-                {EnumDesktopAction.Move, DesktopDeleteAll},
+                {EnumDesktopAction.Move, DesktopMoveAll},
                 {EnumDesktopAction.Nothing, DesktopNothing}
             };
             _download = new Dictionary<EnumFilesAction, RadioButton>

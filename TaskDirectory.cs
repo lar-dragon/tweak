@@ -51,9 +51,19 @@ namespace Tweak
                 }
                 else if (Move)
                 {
-                    file.MoveTo(Program.GetDirectoryInfo(EnumKnownFolder.Documents).FullName);
+                    var to = Program.GetDirectoryInfo(EnumKnownFolder.Documents).FullName;
+                    var sub = GetRelativePathTo(_directoryInfo, file);
+                    var target = Path.Combine(to, sub);
+                    new FileInfo(target).Directory?.Create();
+                    file.MoveTo(target);
                 }
             }
+
+            if (Move || Delete)
+            {
+                DeleteEmptyDirs(_directoryInfo.FullName);
+            }
+
             var user = WindowsIdentity.GetCurrent().User;
             if (user == null) return;
             var rule = new FileSystemAccessRule(
@@ -79,6 +89,48 @@ namespace Tweak
         public override string ToString()
         {
             return "Обслуживание директории " + _directoryInfo.Name;
+        }
+        
+        private static string GetRelativePathTo(FileSystemInfo from, FileSystemInfo to)
+        {
+            Func<FileSystemInfo, string> getPath = fsi =>
+            {
+                var d = fsi as DirectoryInfo;
+                return d == null ? fsi.FullName : d.FullName.TrimEnd('\\') + "\\";
+            };
+
+            var fromPath = getPath(from);
+            var toPath = getPath(to);
+
+            var fromUri = new Uri(fromPath);
+            var toUri = new Uri(toPath);
+
+            var relativeUri = fromUri.MakeRelativeUri(toUri);
+            var relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+
+            return relativePath.Replace('/', Path.DirectorySeparatorChar);
+        }
+        
+        private static void DeleteEmptyDirs(string dir)
+        {
+            try
+            {
+                foreach (var d in Directory.EnumerateDirectories(dir))
+                {
+                    DeleteEmptyDirs(d);
+                }
+
+                var entries = Directory.EnumerateFileSystemEntries(dir);
+
+                if (entries.Any()) return;
+                try
+                {
+                    Directory.Delete(dir);
+                }
+                catch (UnauthorizedAccessException) { }
+                catch (DirectoryNotFoundException) { }
+            }
+            catch (UnauthorizedAccessException) { }
         }
     }
 }
