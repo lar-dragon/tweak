@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Tweak
 {
@@ -11,65 +13,121 @@ namespace Tweak
 
         public Tasks(Config config)
         {
-            AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Desktop))
+            try
             {
-                Delete = config.DesktopAction != EnumDesktopAction.Move
-                         && config.DesktopAction != EnumDesktopAction.Nothing,
-                Move = config.DesktopAction == EnumDesktopAction.DeleteOldAndMove
-                       || config.DesktopAction == EnumDesktopAction.Move,
-                ByDate = config.DesktopAction == EnumDesktopAction.DeleteOld
-                         || config.DesktopAction == EnumDesktopAction.DeleteOldAndMove,
-                Readonly = config.DesktopReadonly
-            });
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Desktop))
+                {
+                    Delete = config.DesktopAction != EnumDesktopAction.Move
+                             && config.DesktopAction != EnumDesktopAction.Nothing,
+                    Move = config.DesktopAction == EnumDesktopAction.DeleteOldAndMove
+                           || config.DesktopAction == EnumDesktopAction.Move,
+                    ByDate = config.DesktopAction == EnumDesktopAction.DeleteOld
+                             || config.DesktopAction == EnumDesktopAction.DeleteOldAndMove,
+                    Readonly = config.DesktopReadonly
+                });
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+
+            try
+            {
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Downloads))
+                {
+                    Delete = config.DownloadsAction != EnumFilesAction.Nothing,
+                    ByDate = config.DownloadsAction == EnumFilesAction.DeleteOld,
+                    Readonly = config.DownloadsReadonly
+                });
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+
+            try
+            {
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Documents))
+                {
+                    Delete = config.OthersAction != EnumFilesAction.Nothing,
+                    ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
+                    Readonly = config.OthersReadonly,
+                    Older = -14
+                });
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+
+            try
+            {
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Pictures))
+                {
+                    Delete = config.OthersAction != EnumFilesAction.Nothing,
+                    ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
+                    Readonly = config.OthersReadonly,
+                    Older = -14
+                });
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
             
-            AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Downloads))
+            try
             {
-                Delete = config.DownloadsAction != EnumFilesAction.Nothing,
-                ByDate = config.DownloadsAction == EnumFilesAction.DeleteOld,
-                Readonly = config.DownloadsReadonly
-            });
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Music))
+                {
+                    Delete = config.OthersAction != EnumFilesAction.Nothing,
+                    ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
+                    Readonly = config.OthersReadonly,
+                    Older = -14
+                });
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
             
-            AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Documents))
+            try
             {
-                Delete = config.OthersAction != EnumFilesAction.Nothing,
-                ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
-                Readonly = config.OthersReadonly,
-                Older = -14
-            });
+                AddTask(new TaskTheme
+                {
+                    LockTheme = config.ThemeLock,
+                    LockWallpaper = config.ThemeLockPicture,
+                    SetDefault = config.ThemeAction == EnumThemeAction.Default
+                });
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
             
-            AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Pictures))
+            try
             {
-                Delete = config.OthersAction != EnumFilesAction.Nothing,
-                ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
-                Readonly = config.OthersReadonly,
-                Older = -14
-            });
+                AddTask(new TaskTemp
+                {
+                    ClearTemp = config.TempDelete,
+                    ClearCache = config.TempDeleteHistory
+                });
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
             
-            AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Music))
+            try
             {
-                Delete = config.OthersAction != EnumFilesAction.Nothing,
-                ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
-                Readonly = config.OthersReadonly,
-                Older = -14
-            });
-            
-            AddTask(new TaskTheme
+                AddTask(new TaskDaily(config.ToString())
+                {
+                    Active = config.Daily
+                });
+            }
+            catch (Exception exception)
             {
-                LockTheme = config.ThemeLock,
-                LockWallpaper = config.ThemeLockPicture,
-                SetDefault = config.ThemeAction == EnumThemeAction.Default
-            });
-            
-            AddTask(new TaskTemp
-            {
-                ClearTemp = config.TempDelete,
-                ClearCache = config.TempDeleteHistory
-            });
-            
-            AddTask(new TaskDaily(config.ToString())
-            {
-                Active = config.Daily
-            });
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void AddTask(ITask task)

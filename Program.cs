@@ -34,11 +34,11 @@ namespace Tweak
             {
                 {
                     EnumKnownFolder.Desktop,
-                    GetDirectoryInfoByGuid(new Guid("{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}"))
+                    new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
                 },
                 {
                     EnumKnownFolder.Documents,
-                    GetDirectoryInfoByGuid(new Guid("{FDD39AD0-238F-46AF-ADB4-6C85480369C7}"))
+                    new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments))
                 },
                 {
                     EnumKnownFolder.Downloads,
@@ -46,11 +46,11 @@ namespace Tweak
                 },
                 {
                     EnumKnownFolder.Music,
-                    GetDirectoryInfoByGuid(new Guid("{4BD8D571-6D19-48D3-BE97-422220080E43}"))
+                    new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic))
                 },
                 {
                     EnumKnownFolder.Pictures,
-                    GetDirectoryInfoByGuid(new Guid("{33E28130-4E1E-4676-835A-98395C3BC3BB}"))
+                    new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
                 },
                 {
                     EnumKnownFolder.Temp,
@@ -58,7 +58,8 @@ namespace Tweak
                 },
                 {
                     EnumKnownFolder.InternetCache,
-                    GetDirectoryInfoByGuid(new Guid("{352481E8-33BE-4251-BA85-6007CAEDCF9D}"))
+                    new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache))
+                    //GetDirectoryInfoByGuid(new Guid("{352481E8-33BE-4251-BA85-6007CAEDCF9D}"))
                 }
             };
 

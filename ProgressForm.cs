@@ -25,17 +25,24 @@ namespace Tweak
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker.ReportProgress(0, "Оценка...");
-
+            
             var tasks = new Tasks(_config);
             ulong progress = 0;
 
             foreach (var task in tasks)
             {
-                BackgroundWorker.ReportProgress((int) (progress / tasks.Total * 100), task.ToString());
-                task.Apply();
-                progress = task.Weight;
+                try
+                {
+                    BackgroundWorker.ReportProgress((int) (progress / tasks.Total * 100), task.ToString());
+                    task.Apply();
+                    progress = task.Weight;
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             }
-            
+
             BackgroundWorker.ReportProgress(100, "Готово!");
         }
 
