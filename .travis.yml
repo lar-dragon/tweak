@@ -1,0 +1,10 @@
+language: csharp
+solution: Tweak.sln
+install:
+  - nuget restore Tweak.sln
+script:
+  - xbuild /p:Configuration=Release Tweak.sln /
+deploy:
+  provider: releases
+  on:
+    tags: true
