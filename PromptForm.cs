@@ -16,9 +16,9 @@ namespace Tweak
             return dialogResult;
         }
 
-        public string Input => textBox.Text;
+        private string Input => textBox.Text;
 
-        public PromptForm()
+        private PromptForm()
         {
             InitializeComponent();
             DialogResult = DialogResult.Abort;

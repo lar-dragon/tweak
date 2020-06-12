@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace Tweak
 {
@@ -15,9 +14,8 @@ namespace Tweak
         private readonly Dictionary<EnumFilesAction, RadioButton> _others;
         private readonly Dictionary<EnumThemeAction, RadioButton> _theme;
         
-        private readonly string _salt = Program.getUUID();
+        private readonly string _salt = Program.GetUuid();
         private readonly RegistryValue _hash = Program.GetRegistryValue(EnumKnownRegistry.PasswordHash);
-        
         
         public ConfigForm() : this(new Config())
         {

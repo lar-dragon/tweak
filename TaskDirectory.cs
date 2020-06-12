@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
-using System.Security.Permissions;
 using System.Security.Principal;
 
 namespace Tweak
@@ -93,14 +92,13 @@ namespace Tweak
         
         private static string GetRelativePathTo(FileSystemInfo from, FileSystemInfo to)
         {
-            Func<FileSystemInfo, string> getPath = fsi =>
+            string GetPath(FileSystemInfo fsi)
             {
-                var d = fsi as DirectoryInfo;
-                return d == null ? fsi.FullName : d.FullName.TrimEnd('\\') + "\\";
-            };
+                return !(fsi is DirectoryInfo d) ? fsi.FullName : d.FullName.TrimEnd('\\') + "\\";
+            }
 
-            var fromPath = getPath(from);
-            var toPath = getPath(to);
+            var fromPath = GetPath(from);
+            var toPath = GetPath(to);
 
             var fromUri = new Uri(fromPath);
             var toUri = new Uri(toPath);

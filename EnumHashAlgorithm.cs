@@ -2,10 +2,10 @@ namespace Tweak
 {
     public enum EnumHashAlgorithm
     {
-        SHA1,
-        SHA256,
-        SHA384,
-        SHA512,
-        MD56
+        Sha1,
+        Sha256,
+        Sha384,
+        Sha512,
+        Md56
     }
 }
