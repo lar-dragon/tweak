@@ -7,9 +7,8 @@ script:
 before_deploy:
   - zip binary.zip bin
 deploy:
-  cleanup: false
   provider: releases
-  file:
-    - binary.zip
+  token: $GITHUB_TOKEN
+  file: binary.zip
   on:
     tags: true
