@@ -7,9 +7,9 @@ script:
 before_deploy:
   - zip binary.zip bin
 deploy:
-  skip_cleanup: true
+  cleanup: false
   provider: releases
-  files:
+  file:
     - binary.zip
   on:
     tags: true
