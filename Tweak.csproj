@@ -46,9 +46,16 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Argument.cs" />
+        <Compile Include="EnumHashAlgorithm.cs" />
         <Compile Include="EnumKnownFolder.cs" />
         <Compile Include="EnumKnownRegistry.cs" />
         <Compile Include="ITask.cs" />
+        <Compile Include="PromptForm.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="PromptForm.Designer.cs">
+          <DependentUpon>PromptForm.cs</DependentUpon>
+        </Compile>
         <Compile Include="RegistryValue.cs" />
         <Compile Include="EnumThemeAction.cs" />
         <Compile Include="TaskDaily.cs" />
@@ -80,6 +87,9 @@
         </Compile>
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <EmbeddedResource Include="PromptForm.resx">
+          <DependentUpon>PromptForm.cs</DependentUpon>
+        </EmbeddedResource>
         <EmbeddedResource Include="Properties\Resources.resx">
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>

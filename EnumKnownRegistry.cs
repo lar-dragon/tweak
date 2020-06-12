@@ -4,5 +4,6 @@ namespace Tweak
     {
         NoThemesTab,
         NoChangingWallPaper,
+        PasswordHash,
     }
 }

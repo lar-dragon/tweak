@@ -59,6 +59,7 @@ namespace Tweak
             this.ClearButton = new System.Windows.Forms.Button();
             this.DailyCheckBox = new System.Windows.Forms.CheckBox();
             this.OpenProgramsButton = new System.Windows.Forms.Button();
+            this.ProtectCheckBox = new System.Windows.Forms.CheckBox();
             this.DesctopGroupBox.SuspendLayout();
             this.DownloadsGroupBox.SuspendLayout();
             this.OthersGroupBox.SuspendLayout();
@@ -405,7 +406,7 @@ namespace Tweak
             // 
             // OpenProgramsButton
             // 
-            this.OpenProgramsButton.Location = new System.Drawing.Point(463, 299);
+            this.OpenProgramsButton.Location = new System.Drawing.Point(463, 322);
             this.OpenProgramsButton.Name = "OpenProgramsButton";
             this.OpenProgramsButton.Size = new System.Drawing.Size(295, 23);
             this.OpenProgramsButton.TabIndex = 8;
@@ -413,11 +414,23 @@ namespace Tweak
             this.OpenProgramsButton.UseVisualStyleBackColor = true;
             this.OpenProgramsButton.Click += new System.EventHandler(this.OpenProgramsButton_Click);
             // 
+            // ProtectCheckBox
+            // 
+            this.ProtectCheckBox.AutoSize = true;
+            this.ProtectCheckBox.Location = new System.Drawing.Point(463, 299);
+            this.ProtectCheckBox.Name = "ProtectCheckBox";
+            this.ProtectCheckBox.Size = new System.Drawing.Size(123, 17);
+            this.ProtectCheckBox.TabIndex = 9;
+            this.ProtectCheckBox.Text = "Защитить паролем";
+            this.ProtectCheckBox.UseVisualStyleBackColor = true;
+            this.ProtectCheckBox.CheckedChanged += new System.EventHandler(this.ProtectCheckBox_CheckedChanged);
+            // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 454);
+            this.Controls.Add(this.ProtectCheckBox);
             this.Controls.Add(this.OpenProgramsButton);
             this.Controls.Add(this.DailyCheckBox);
             this.Controls.Add(this.ClearButton);
@@ -434,6 +447,7 @@ namespace Tweak
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Контроль пользовательских данных";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ConfigForm_FormClosed);
+            this.Load += new System.EventHandler(this.ConfigForm_Load);
             this.DesctopGroupBox.ResumeLayout(false);
             this.DesctopGroupBox.PerformLayout();
             this.DownloadsGroupBox.ResumeLayout(false);
@@ -468,6 +482,7 @@ namespace Tweak
         private System.Windows.Forms.GroupBox OthersGroupBox;
         private System.Windows.Forms.RadioButton OthersNothing;
         private System.Windows.Forms.CheckBox OthersReadonlyCheckBox;
+        private System.Windows.Forms.CheckBox ProtectCheckBox;
         private System.Windows.Forms.CheckBox TempDeleteCheckBox;
         private System.Windows.Forms.CheckBox TempDeleteHistoryCheckBox;
         private System.Windows.Forms.GroupBox TempGroupBox;

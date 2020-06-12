@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace Tweak
 {
@@ -13,6 +14,10 @@ namespace Tweak
         private readonly Dictionary<EnumFilesAction, RadioButton> _download;
         private readonly Dictionary<EnumFilesAction, RadioButton> _others;
         private readonly Dictionary<EnumThemeAction, RadioButton> _theme;
+        
+        private readonly string _salt = Program.getUUID();
+        private readonly RegistryValue _hash = Program.GetRegistryValue(EnumKnownRegistry.PasswordHash);
+        
         
         public ConfigForm() : this(new Config())
         {
@@ -59,6 +64,7 @@ namespace Tweak
             TempDeleteCheckBox.Checked = _config.TempDelete;
             TempDeleteHistoryCheckBox.Checked = _config.TempDeleteHistory;
             DailyCheckBox.Checked = _config.Daily;
+            ProtectCheckBox.Checked = _hash.GetValue<string>() != "";
         }
 
         private void Desktop_CheckedChanged(object sender, EventArgs e)
@@ -152,6 +158,33 @@ namespace Tweak
         private void ConfigForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void ConfigForm_Load(object sender, EventArgs e)
+        {
+            var hash = _hash.GetValue<string>();
+            if (hash == "") return;
+            var salt = string.Copy(_salt);
+            string value;
+            do
+            {
+                if (PromptForm.GetText(out value) == DialogResult.Abort) Application.Exit();
+            } while (hash != Program.ComputeHash(value, ref salt));
+        }
+
+        private void ProtectCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Visible) return;
+            if (ProtectCheckBox.Checked)
+            {
+                if (PromptForm.GetText(out var value) == DialogResult.Abort) return;
+                var salt = string.Copy(_salt);
+                _hash.SetValue(Program.ComputeHash(value, ref salt));
+            }
+            else
+            {
+                _hash.SetValue("");
+            }
         }
     }
 }

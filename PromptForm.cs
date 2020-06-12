@@ -1,0 +1,38 @@
+using System;
+using System.Windows.Forms;
+
+namespace Tweak
+{
+    public partial class PromptForm : Form
+    {
+        public static DialogResult GetText(out string input)
+        {
+            var promptForm = new PromptForm();
+            var dialogResult = promptForm.ShowDialog();
+            input = promptForm.Input;
+            promptForm.Hide();
+            promptForm.Dispose();
+            
+            return dialogResult;
+        }
+
+        public string Input => textBox.Text;
+
+        public PromptForm()
+        {
+            InitializeComponent();
+            DialogResult = DialogResult.Abort;
+        }
+
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void buttonAbort_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+    }
+}
