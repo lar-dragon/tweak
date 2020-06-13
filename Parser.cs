@@ -19,12 +19,12 @@ namespace Tweak
                 var items = arg.Split("=".ToCharArray(), 2, StringSplitOptions.RemoveEmptyEntries);
                 var name = items.First();
                 var value = string.Join(" ", items.Skip(1).ToList());
-                var property = Config.GetType()
+                var property = Config
+                    .GetType()
                     .GetProperties()
                     .First(a => a.GetCustomAttributes(typeof(Argument), true)
                         .First(b => b.ToString() == name) != null);
                 if (property != null)
-                {
                     property.SetValue(
                         Config,
                         property.GetType().IsEnum
@@ -32,16 +32,12 @@ namespace Tweak
                             : bool.Parse(value),
                         null
                     );
-                }
             }
+            
             if (args.Count > 0)
-            {
                 Form = new ProgressForm(Config);
-            }
             else
-            {
                 Form = new ConfigForm(Config);
-            }
         }
     }
 }

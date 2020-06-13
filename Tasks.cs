@@ -15,16 +15,18 @@ namespace Tweak
         {
             try
             {
-                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Desktop))
-                {
-                    Delete = config.DesktopAction != EnumDesktopAction.Move
-                             && config.DesktopAction != EnumDesktopAction.Nothing,
-                    Move = config.DesktopAction == EnumDesktopAction.DeleteOldAndMove
-                           || config.DesktopAction == EnumDesktopAction.Move,
-                    ByDate = config.DesktopAction == EnumDesktopAction.DeleteOld
-                             || config.DesktopAction == EnumDesktopAction.DeleteOldAndMove,
-                    Readonly = config.DesktopReadonly
-                });
+                AddTask(
+                    new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Desktop))
+                    {
+                        Delete = config.DesktopAction != EnumDesktopAction.Move
+                                 && config.DesktopAction != EnumDesktopAction.Nothing,
+                        Move = config.DesktopAction == EnumDesktopAction.DeleteOldAndMove
+                               || config.DesktopAction == EnumDesktopAction.Move,
+                        ByDate = config.DesktopAction == EnumDesktopAction.DeleteOld
+                                 || config.DesktopAction == EnumDesktopAction.DeleteOldAndMove,
+                        Readonly = config.DesktopReadonly
+                    }
+                );
             }
             catch (Exception exception)
             {

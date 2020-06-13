@@ -32,12 +32,12 @@ namespace Tweak
         private void InitializeComponent()
         {
             System.Windows.Forms.Label label1;
-            System.Windows.Forms.Button button1;
-            System.Windows.Forms.Button button2;
+            System.Windows.Forms.Button buttonOk;
+            System.Windows.Forms.Button buttonAbort;
             this.textBox = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
-            button1 = new System.Windows.Forms.Button();
-            button2 = new System.Windows.Forms.Button();
+            buttonOk = new System.Windows.Forms.Button();
+            buttonAbort = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -49,25 +49,27 @@ namespace Tweak
             label1.TabIndex = 1;
             label1.Text = "Пароль:";
             // 
-            // button1
+            // buttonOk
             // 
-            button1.Location = new System.Drawing.Point(269, 38);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(75, 23);
-            button1.TabIndex = 2;
-            button1.Text = "Ок";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += new System.EventHandler(this.buttonOk_Click);
+            buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            buttonOk.Location = new System.Drawing.Point(269, 38);
+            buttonOk.Name = "buttonOk";
+            buttonOk.Size = new System.Drawing.Size(75, 23);
+            buttonOk.TabIndex = 1;
+            buttonOk.Text = "Ок";
+            buttonOk.UseVisualStyleBackColor = true;
+            buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
-            // button2
+            // buttonAbort
             // 
-            button2.Location = new System.Drawing.Point(188, 38);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(75, 23);
-            button2.TabIndex = 3;
-            button2.Text = "Отмена";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += new System.EventHandler(this.buttonAbort_Click);
+            buttonAbort.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            buttonAbort.Location = new System.Drawing.Point(188, 38);
+            buttonAbort.Name = "buttonAbort";
+            buttonAbort.Size = new System.Drawing.Size(75, 23);
+            buttonAbort.TabIndex = 2;
+            buttonAbort.Text = "Отмена";
+            buttonAbort.UseVisualStyleBackColor = true;
+            buttonAbort.Click += new System.EventHandler(this.buttonAbort_Click);
             // 
             // textBox
             // 
@@ -78,13 +80,15 @@ namespace Tweak
             // 
             // PromptForm
             // 
+            this.AcceptButton = buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.CancelButton = buttonAbort;
             this.ClientSize = new System.Drawing.Size(356, 73);
             this.ControlBox = false;
-            this.Controls.Add(button2);
-            this.Controls.Add(button1);
+            this.Controls.Add(buttonAbort);
+            this.Controls.Add(buttonOk);
             this.Controls.Add(label1);
             this.Controls.Add(this.textBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

@@ -45,9 +45,7 @@ namespace Tweak
                 ) continue;
 
                 if (Delete && (!ByDate || file.LastWriteTime < date))
-                {
                     file.Delete();
-                }
                 else if (Move)
                 {
                     var to = Program.GetDirectoryInfo(EnumKnownFolder.Documents).FullName;
@@ -59,12 +57,12 @@ namespace Tweak
             }
 
             if (Move || Delete)
-            {
                 DeleteEmptyDirs(_directoryInfo.FullName);
-            }
 
             var user = WindowsIdentity.GetCurrent().User;
-            if (user == null) return;
+            if (user == null)
+                return;
+            
             var rule = new FileSystemAccessRule(
                 user,
                 FileSystemRights.CreateFiles | FileSystemRights.CreateDirectories | FileSystemRights.WriteData,
@@ -114,13 +112,12 @@ namespace Tweak
             try
             {
                 foreach (var d in Directory.EnumerateDirectories(dir))
-                {
                     DeleteEmptyDirs(d);
-                }
 
                 var entries = Directory.EnumerateFileSystemEntries(dir);
-
-                if (entries.Any()) return;
+                if (entries.Any())
+                    return;
+                
                 try
                 {
                     Directory.Delete(dir);

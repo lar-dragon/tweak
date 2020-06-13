@@ -8,8 +8,7 @@ namespace Tweak
     {
         private readonly Config _config;
 
-        public ProgressForm() : this(new Config())
-        {}
+        public ProgressForm() : this(new Config()) { }
         
         public ProgressForm(Config config)
         {
@@ -25,12 +24,9 @@ namespace Tweak
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker.ReportProgress(0, "Оценка...");
-            
             var tasks = new Tasks(_config);
             ulong progress = 0;
-
             foreach (var task in tasks)
-            {
                 try
                 {
                     BackgroundWorker.ReportProgress((int) (progress / tasks.Total * 100), task.ToString());
@@ -41,7 +37,6 @@ namespace Tweak
                 {
                     MessageBox.Show(exception.Message);
                 }
-            }
 
             BackgroundWorker.ReportProgress(100, "Готово!");
         }

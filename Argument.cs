@@ -5,16 +5,16 @@ namespace Tweak
     [AttributeUsage(AttributeTargets.Property)]  
     public class Argument: Attribute
     {
-        public string Name { get; }
+        private readonly string _name;
 
         public Argument(string name)
         {
-            Name = name;
+            _name = name;
         }
 
         public override string ToString()
         {
-            return Name;
+            return _name;
         }
     }
 }

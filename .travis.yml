@@ -5,11 +5,12 @@ install:
 script:
   - msbuild /p:Configuration=Release Tweak.sln
 before_deploy:
-  - zip -r bin/Release.zip bin/Release
+  - (cd bin && for file in */ ; do zip -r "${file%/}.zip" $file; done)
 deploy:
   skip_cleanup: true
   provider: releases
   token: $GITHUB_TOKEN
-  file: bin/Release.zip
+  file_glob: true
+  file: bin/*.zip
   on:
     tags: true

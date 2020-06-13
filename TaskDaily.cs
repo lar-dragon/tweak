@@ -26,31 +26,34 @@ namespace Tweak
                 {
                     FileName = "schtasks.exe",
                     Arguments = "/delete /tn " + Program.TaskName + " /f",
-                    UseShellExecute = true
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
                 }
             }.Start();
+
+            if (!Active) return;
             
-            if (Active)
+            new Process
             {
-                var f = new FileInfo(Application.ExecutablePath);
-                var p = new Process
+                EnableRaisingEvents = false,
+                StartInfo =
                 {
-                    EnableRaisingEvents = false,
-                    StartInfo =
-                    {
-                        FileName = "schtasks.exe",
-                        Arguments = "/create /sc daily /tn "
-                                    + Program.TaskName
-                                    + " /tr \""
-                                    + f.Name
-                                    + " "
-                                    + _args
-                                    + "\"",
-                        UseShellExecute = true,
-                        CreateNoWindow = true
-                    }
-                }.Start();
-            }
+                    FileName = "schtasks.exe",
+                    Arguments = "/create /sc daily /tn "
+                                + Program.TaskName
+                                + " /tr \""
+                                + new FileInfo(Application.ExecutablePath).Name
+                                + " "
+                                + _args
+                                + "\"",
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            }.Start();
         }
 
         public override string ToString()

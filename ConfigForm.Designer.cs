@@ -79,7 +79,7 @@ namespace Tweak
             this.DesctopGroupBox.Location = new System.Drawing.Point(12, 12);
             this.DesctopGroupBox.Name = "DesctopGroupBox";
             this.DesctopGroupBox.Size = new System.Drawing.Size(445, 170);
-            this.DesctopGroupBox.TabIndex = 1;
+            this.DesctopGroupBox.TabIndex = 0;
             this.DesctopGroupBox.TabStop = false;
             this.DesctopGroupBox.Text = "Рабочий стол";
             // 
@@ -169,7 +169,7 @@ namespace Tweak
             this.DownloadsGroupBox.Location = new System.Drawing.Point(12, 188);
             this.DownloadsGroupBox.Name = "DownloadsGroupBox";
             this.DownloadsGroupBox.Size = new System.Drawing.Size(445, 124);
-            this.DownloadsGroupBox.TabIndex = 2;
+            this.DownloadsGroupBox.TabIndex = 1;
             this.DownloadsGroupBox.TabStop = false;
             this.DownloadsGroupBox.Text = "Загрузки";
             // 
@@ -179,7 +179,7 @@ namespace Tweak
             this.DownloadsReadonlyCheckBox.Location = new System.Drawing.Point(6, 88);
             this.DownloadsReadonlyCheckBox.Name = "DownloadsReadonlyCheckBox";
             this.DownloadsReadonlyCheckBox.Size = new System.Drawing.Size(273, 17);
-            this.DownloadsReadonlyCheckBox.TabIndex = 6;
+            this.DownloadsReadonlyCheckBox.TabIndex = 3;
             this.DownloadsReadonlyCheckBox.Text = "Запретить создание файлов в папке \"Загрузки\"";
             this.DownloadsReadonlyCheckBox.UseVisualStyleBackColor = true;
             this.DownloadsReadonlyCheckBox.CheckedChanged += new System.EventHandler(this.DownloadsReadonlyCheckBox_CheckedChanged);
@@ -190,7 +190,7 @@ namespace Tweak
             this.DownloadsNothing.Location = new System.Drawing.Point(6, 65);
             this.DownloadsNothing.Name = "DownloadsNothing";
             this.DownloadsNothing.Size = new System.Drawing.Size(153, 17);
-            this.DownloadsNothing.TabIndex = 3;
+            this.DownloadsNothing.TabIndex = 2;
             this.DownloadsNothing.TabStop = true;
             this.DownloadsNothing.Tag = "2";
             this.DownloadsNothing.Text = "Оставить без изменения";
@@ -203,7 +203,7 @@ namespace Tweak
             this.DownloadsDeleteOld.Location = new System.Drawing.Point(6, 42);
             this.DownloadsDeleteOld.Name = "DownloadsDeleteOld";
             this.DownloadsDeleteOld.Size = new System.Drawing.Size(205, 17);
-            this.DownloadsDeleteOld.TabIndex = 2;
+            this.DownloadsDeleteOld.TabIndex = 1;
             this.DownloadsDeleteOld.TabStop = true;
             this.DownloadsDeleteOld.Tag = "1";
             this.DownloadsDeleteOld.Text = "Удалить все файлы, старше 7 дней";
@@ -216,7 +216,7 @@ namespace Tweak
             this.DownloadsDeleteAll.Location = new System.Drawing.Point(6, 19);
             this.DownloadsDeleteAll.Name = "DownloadsDeleteAll";
             this.DownloadsDeleteAll.Size = new System.Drawing.Size(126, 17);
-            this.DownloadsDeleteAll.TabIndex = 1;
+            this.DownloadsDeleteAll.TabIndex = 0;
             this.DownloadsDeleteAll.TabStop = true;
             this.DownloadsDeleteAll.Tag = "0";
             this.DownloadsDeleteAll.Text = "Удалить все файлы";
@@ -233,7 +233,7 @@ namespace Tweak
             this.OthersGroupBox.Location = new System.Drawing.Point(12, 318);
             this.OthersGroupBox.Name = "OthersGroupBox";
             this.OthersGroupBox.Size = new System.Drawing.Size(445, 124);
-            this.OthersGroupBox.TabIndex = 3;
+            this.OthersGroupBox.TabIndex = 2;
             this.OthersGroupBox.TabStop = false;
             this.OthersGroupBox.Text = "Папки Документы, Изображения, Музыка";
             // 
@@ -243,7 +243,7 @@ namespace Tweak
             this.OthersReadonlyCheckBox.Location = new System.Drawing.Point(6, 88);
             this.OthersReadonlyCheckBox.Name = "OthersReadonlyCheckBox";
             this.OthersReadonlyCheckBox.Size = new System.Drawing.Size(292, 17);
-            this.OthersReadonlyCheckBox.TabIndex = 9;
+            this.OthersReadonlyCheckBox.TabIndex = 3;
             this.OthersReadonlyCheckBox.Text = "Запретить создание файлов в папках пользователя";
             this.OthersReadonlyCheckBox.UseVisualStyleBackColor = true;
             this.OthersReadonlyCheckBox.CheckedChanged += new System.EventHandler(this.OthersReadonlyCheckBox_CheckedChanged);
@@ -254,7 +254,7 @@ namespace Tweak
             this.OthersNothing.Location = new System.Drawing.Point(6, 65);
             this.OthersNothing.Name = "OthersNothing";
             this.OthersNothing.Size = new System.Drawing.Size(153, 17);
-            this.OthersNothing.TabIndex = 8;
+            this.OthersNothing.TabIndex = 2;
             this.OthersNothing.TabStop = true;
             this.OthersNothing.Tag = "2";
             this.OthersNothing.Text = "Оставить без изменения";
@@ -267,7 +267,7 @@ namespace Tweak
             this.OthersDeleteOld.Location = new System.Drawing.Point(6, 42);
             this.OthersDeleteOld.Name = "OthersDeleteOld";
             this.OthersDeleteOld.Size = new System.Drawing.Size(211, 17);
-            this.OthersDeleteOld.TabIndex = 7;
+            this.OthersDeleteOld.TabIndex = 1;
             this.OthersDeleteOld.TabStop = true;
             this.OthersDeleteOld.Tag = "1";
             this.OthersDeleteOld.Text = "Удалить все файлы, старше 14 дней";
@@ -280,7 +280,7 @@ namespace Tweak
             this.OthersDeleteAll.Location = new System.Drawing.Point(6, 19);
             this.OthersDeleteAll.Name = "OthersDeleteAll";
             this.OthersDeleteAll.Size = new System.Drawing.Size(126, 17);
-            this.OthersDeleteAll.TabIndex = 2;
+            this.OthersDeleteAll.TabIndex = 0;
             this.OthersDeleteAll.TabStop = true;
             this.OthersDeleteAll.Tag = "0";
             this.OthersDeleteAll.Text = "Удалить все файлы";
@@ -297,7 +297,7 @@ namespace Tweak
             this.ThemeGroupBox.Location = new System.Drawing.Point(463, 12);
             this.ThemeGroupBox.Name = "ThemeGroupBox";
             this.ThemeGroupBox.Size = new System.Drawing.Size(295, 124);
-            this.ThemeGroupBox.TabIndex = 4;
+            this.ThemeGroupBox.TabIndex = 3;
             this.ThemeGroupBox.TabStop = false;
             this.ThemeGroupBox.Text = "Оформление";
             // 
@@ -307,7 +307,7 @@ namespace Tweak
             this.ThemeLookPictureCheckBox.Location = new System.Drawing.Point(6, 88);
             this.ThemeLookPictureCheckBox.Name = "ThemeLookPictureCheckBox";
             this.ThemeLookPictureCheckBox.Size = new System.Drawing.Size(283, 17);
-            this.ThemeLookPictureCheckBox.TabIndex = 4;
+            this.ThemeLookPictureCheckBox.TabIndex = 3;
             this.ThemeLookPictureCheckBox.Text = "Запретить изменять изображение рабочего стола";
             this.ThemeLookPictureCheckBox.UseVisualStyleBackColor = true;
             this.ThemeLookPictureCheckBox.CheckedChanged += new System.EventHandler(this.ThemeLookPictureCheckBox_CheckedChanged);
@@ -318,7 +318,7 @@ namespace Tweak
             this.ThemeLookCheckBox.Location = new System.Drawing.Point(6, 65);
             this.ThemeLookCheckBox.Name = "ThemeLookCheckBox";
             this.ThemeLookCheckBox.Size = new System.Drawing.Size(225, 17);
-            this.ThemeLookCheckBox.TabIndex = 3;
+            this.ThemeLookCheckBox.TabIndex = 2;
             this.ThemeLookCheckBox.Text = "Запретить изменять тему оформления";
             this.ThemeLookCheckBox.UseVisualStyleBackColor = true;
             this.ThemeLookCheckBox.CheckedChanged += new System.EventHandler(this.ThemeLookCheckBox_CheckedChanged);
@@ -329,7 +329,7 @@ namespace Tweak
             this.ThemeNothing.Location = new System.Drawing.Point(6, 42);
             this.ThemeNothing.Name = "ThemeNothing";
             this.ThemeNothing.Size = new System.Drawing.Size(153, 17);
-            this.ThemeNothing.TabIndex = 2;
+            this.ThemeNothing.TabIndex = 1;
             this.ThemeNothing.TabStop = true;
             this.ThemeNothing.Tag = "1";
             this.ThemeNothing.Text = "Оставить без изменения";
@@ -342,7 +342,7 @@ namespace Tweak
             this.ThemeSetDefault.Location = new System.Drawing.Point(6, 19);
             this.ThemeSetDefault.Name = "ThemeSetDefault";
             this.ThemeSetDefault.Size = new System.Drawing.Size(247, 17);
-            this.ThemeSetDefault.TabIndex = 1;
+            this.ThemeSetDefault.TabIndex = 0;
             this.ThemeSetDefault.TabStop = true;
             this.ThemeSetDefault.Tag = "0";
             this.ThemeSetDefault.Text = "Установить стандартную тему оформления";
@@ -357,7 +357,7 @@ namespace Tweak
             this.TempGroupBox.Location = new System.Drawing.Point(463, 142);
             this.TempGroupBox.Name = "TempGroupBox";
             this.TempGroupBox.Size = new System.Drawing.Size(295, 78);
-            this.TempGroupBox.TabIndex = 5;
+            this.TempGroupBox.TabIndex = 4;
             this.TempGroupBox.TabStop = false;
             this.TempGroupBox.Text = "Обслуживание, временные файлы";
             // 
@@ -367,7 +367,7 @@ namespace Tweak
             this.TempDeleteHistoryCheckBox.Location = new System.Drawing.Point(6, 42);
             this.TempDeleteHistoryCheckBox.Name = "TempDeleteHistoryCheckBox";
             this.TempDeleteHistoryCheckBox.Size = new System.Drawing.Size(207, 17);
-            this.TempDeleteHistoryCheckBox.TabIndex = 6;
+            this.TempDeleteHistoryCheckBox.TabIndex = 1;
             this.TempDeleteHistoryCheckBox.Text = "Удалить историю, пароли браузера";
             this.TempDeleteHistoryCheckBox.UseVisualStyleBackColor = true;
             this.TempDeleteHistoryCheckBox.CheckedChanged += new System.EventHandler(this.TempDeleteHistoryCheckBox_CheckedChanged);
@@ -378,7 +378,7 @@ namespace Tweak
             this.TempDeleteCheckBox.Location = new System.Drawing.Point(6, 19);
             this.TempDeleteCheckBox.Name = "TempDeleteCheckBox";
             this.TempDeleteCheckBox.Size = new System.Drawing.Size(167, 17);
-            this.TempDeleteCheckBox.TabIndex = 5;
+            this.TempDeleteCheckBox.TabIndex = 0;
             this.TempDeleteCheckBox.Text = "Удалить временные файлы";
             this.TempDeleteCheckBox.UseVisualStyleBackColor = true;
             this.TempDeleteCheckBox.CheckedChanged += new System.EventHandler(this.TempDeleteCheckBox_CheckedChanged);
@@ -388,7 +388,7 @@ namespace Tweak
             this.ClearButton.Location = new System.Drawing.Point(463, 224);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(295, 46);
-            this.ClearButton.TabIndex = 6;
+            this.ClearButton.TabIndex = 5;
             this.ClearButton.Text = "Выполнить очистку";
             this.ClearButton.UseVisualStyleBackColor = true;
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
@@ -399,7 +399,7 @@ namespace Tweak
             this.DailyCheckBox.Location = new System.Drawing.Point(463, 276);
             this.DailyCheckBox.Name = "DailyCheckBox";
             this.DailyCheckBox.Size = new System.Drawing.Size(183, 17);
-            this.DailyCheckBox.TabIndex = 7;
+            this.DailyCheckBox.TabIndex = 6;
             this.DailyCheckBox.Text = "Выполнять очистку ежедневно";
             this.DailyCheckBox.UseVisualStyleBackColor = true;
             this.DailyCheckBox.CheckedChanged += new System.EventHandler(this.DailyCheckBox_CheckedChanged);
@@ -420,7 +420,7 @@ namespace Tweak
             this.ProtectCheckBox.Location = new System.Drawing.Point(463, 299);
             this.ProtectCheckBox.Name = "ProtectCheckBox";
             this.ProtectCheckBox.Size = new System.Drawing.Size(123, 17);
-            this.ProtectCheckBox.TabIndex = 9;
+            this.ProtectCheckBox.TabIndex = 7;
             this.ProtectCheckBox.Text = "Защитить паролем";
             this.ProtectCheckBox.UseVisualStyleBackColor = true;
             this.ProtectCheckBox.CheckedChanged += new System.EventHandler(this.ProtectCheckBox_CheckedChanged);

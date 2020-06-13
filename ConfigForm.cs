@@ -9,17 +9,20 @@ namespace Tweak
     public partial class ConfigForm : Form
     {
         private readonly Config _config;
+        
         private readonly Dictionary<EnumDesktopAction, RadioButton> _desktop;
+        
         private readonly Dictionary<EnumFilesAction, RadioButton> _download;
+        
         private readonly Dictionary<EnumFilesAction, RadioButton> _others;
+        
         private readonly Dictionary<EnumThemeAction, RadioButton> _theme;
         
         private readonly string _salt = Program.GetUuid();
+        
         private readonly RegistryValue _hash = Program.GetRegistryValue(EnumKnownRegistry.PasswordHash);
         
-        public ConfigForm() : this(new Config())
-        {
-        }
+        public ConfigForm() : this(new Config()) { }
         
         public ConfigForm(Config config)
         {
@@ -68,33 +71,25 @@ namespace Tweak
         private void Desktop_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton) sender).Checked)
-                _config.DesktopAction = _desktop
-                    .FirstOrDefault(x => x.Value == sender)
-                    .Key;
+                _config.DesktopAction = _desktop.FirstOrDefault(x => x.Value == sender).Key;
         }
 
         private void Download_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton) sender).Checked)
-                _config.DownloadsAction = _download
-                    .FirstOrDefault(x => x.Value == sender)
-                    .Key;
+                _config.DownloadsAction = _download.FirstOrDefault(x => x.Value == sender).Key;
         }
 
         private void Others_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton) sender).Checked)
-                _config.OthersAction = _others
-                    .FirstOrDefault(x => x.Value == sender)
-                    .Key;
+                _config.OthersAction = _others.FirstOrDefault(x => x.Value == sender).Key;
         }
 
         private void Theme_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton) sender).Checked)
-                _config.ThemeAction = _theme
-                    .FirstOrDefault(x => x.Value == sender)
-                    .Key;
+                _config.ThemeAction = _theme.FirstOrDefault(x => x.Value == sender).Key;
         }
 
         private void DesktopReadonlyCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -141,7 +136,11 @@ namespace Tweak
         {
             new Process
             {
-                EnableRaisingEvents = false, StartInfo = {FileName = "appwiz.cpl", UseShellExecute = true}
+                EnableRaisingEvents = false,
+                StartInfo =
+                {
+                    FileName = "appwiz.cpl",
+                }
             }.Start();
         }
 
@@ -161,28 +160,30 @@ namespace Tweak
         private void ConfigForm_Load(object sender, EventArgs e)
         {
             var hash = _hash.GetValue<string>();
-            if (hash == "") return;
-            var salt = string.Copy(_salt);
+            if (hash == "")
+                return;
+            
             string value;
             do
             {
-                if (PromptForm.GetText(out value) == DialogResult.Abort) Application.Exit();
-            } while (hash != Program.ComputeHash(value, ref salt));
+                if (PromptForm.GetText(out value) != DialogResult.Abort)
+                    continue;
+                
+                Application.Exit();
+                break;
+            } while (hash != Program.ComputeHash(value, _salt));
         }
 
         private void ProtectCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Visible) return;
-            if (ProtectCheckBox.Checked)
-            {
-                if (PromptForm.GetText(out var value) == DialogResult.Abort) return;
-                var salt = string.Copy(_salt);
-                _hash.SetValue(Program.ComputeHash(value, ref salt));
-            }
-            else
-            {
-                _hash.SetValue("");
-            }
+            if (!Visible)
+                return;
+            
+            _hash.SetValue(
+                ProtectCheckBox.Checked && PromptForm.GetText(out var value) != DialogResult.Abort
+                    ? Program.ComputeHash(value, _salt)
+                    : ""
+            );
         }
     }
 }

@@ -46,7 +46,6 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Argument.cs" />
-        <Compile Include="EnumHashAlgorithm.cs" />
         <Compile Include="EnumKnownFolder.cs" />
         <Compile Include="EnumKnownRegistry.cs" />
         <Compile Include="ITask.cs" />
