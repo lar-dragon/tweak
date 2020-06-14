@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Eventing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -155,7 +154,7 @@ namespace Tweak
 
         private void ConfigForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Environment.Exit(Environment.ExitCode);
+            Application.Exit();
         }
 
         private void ConfigForm_Load(object sender, EventArgs e)
@@ -167,10 +166,12 @@ namespace Tweak
             string value;
             do
             {
-                if (PromptForm.GetText(out value) != DialogResult.Abort)
+                if (PromptForm.GetText(out value) != DialogResult.Cancel)
                     continue;
-                
-                Environment.Exit(Environment.ExitCode);
+
+                Opacity = 0;
+                BeginInvoke(new MethodInvoker(Close));
+                break;
             } while (hash != Program.ComputeHash(value, _salt));
         }
 
@@ -180,7 +181,7 @@ namespace Tweak
                 return;
 
             if (ProtectCheckBox.Checked)
-                if (PromptForm.GetText(out var value) != DialogResult.Abort)
+                if (PromptForm.GetText(out var value) != DialogResult.Cancel)
                     _hash.SetValue(Program.ComputeHash(value, _salt));
                 else
                     ((CheckBox) sender).Checked = false;

@@ -62,14 +62,14 @@ namespace Tweak
             // 
             // buttonAbort
             // 
-            buttonAbort.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            buttonAbort.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             buttonAbort.Location = new System.Drawing.Point(188, 38);
             buttonAbort.Name = "buttonAbort";
             buttonAbort.Size = new System.Drawing.Size(75, 23);
             buttonAbort.TabIndex = 2;
             buttonAbort.Text = "Отмена";
             buttonAbort.UseVisualStyleBackColor = true;
-            buttonAbort.Click += new System.EventHandler(this.buttonAbort_Click);
+            buttonAbort.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // textBox
             // 

@@ -21,7 +21,7 @@ namespace Tweak
         private PromptForm()
         {
             InitializeComponent();
-            DialogResult = DialogResult.Abort;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace Tweak
             Close();
         }
 
-        private void buttonAbort_Click(object sender, EventArgs e)
+        private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
