@@ -18,7 +18,7 @@ namespace Tweak
 
         private void ProgressForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            Environment.Exit(Environment.ExitCode);
         }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
