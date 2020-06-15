@@ -389,7 +389,7 @@ namespace Tweak
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(295, 46);
             this.ClearButton.TabIndex = 5;
-            this.ClearButton.Text = "Выполнить очистку";
+            this.ClearButton.Text = "Выполнить отчистку";
             this.ClearButton.UseVisualStyleBackColor = true;
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
@@ -400,7 +400,7 @@ namespace Tweak
             this.DailyCheckBox.Name = "DailyCheckBox";
             this.DailyCheckBox.Size = new System.Drawing.Size(183, 17);
             this.DailyCheckBox.TabIndex = 6;
-            this.DailyCheckBox.Text = "Выполнять очистку ежедневно";
+            this.DailyCheckBox.Text = "Выполнять отчистку ежедневно";
             this.DailyCheckBox.UseVisualStyleBackColor = true;
             this.DailyCheckBox.CheckedChanged += new System.EventHandler(this.DailyCheckBox_CheckedChanged);
             // 

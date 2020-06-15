@@ -16,7 +16,7 @@ namespace Tweak
             try
             {
                 AddTask(
-                    new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Desktop))
+                    new TaskDirectory(Program.GetDirectoryInfo(EnumKnownDirectories.Desktop))
                     {
                         Delete = config.DesktopAction != EnumDesktopAction.Move
                                  && config.DesktopAction != EnumDesktopAction.Nothing,
@@ -35,7 +35,7 @@ namespace Tweak
 
             try
             {
-                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Downloads))
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownDirectories.Downloads))
                 {
                     Delete = config.DownloadsAction != EnumFilesAction.Nothing,
                     ByDate = config.DownloadsAction == EnumFilesAction.DeleteOld,
@@ -49,7 +49,7 @@ namespace Tweak
 
             try
             {
-                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Documents))
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownDirectories.Documents))
                 {
                     Delete = config.OthersAction != EnumFilesAction.Nothing,
                     ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
@@ -64,7 +64,7 @@ namespace Tweak
 
             try
             {
-                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Pictures))
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownDirectories.Pictures))
                 {
                     Delete = config.OthersAction != EnumFilesAction.Nothing,
                     ByDate = config.OthersAction == EnumFilesAction.DeleteOld,
@@ -79,7 +79,7 @@ namespace Tweak
             
             try
             {
-                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownFolder.Music))
+                AddTask(new TaskDirectory(Program.GetDirectoryInfo(EnumKnownDirectories.Music))
                 {
                     Delete = config.OthersAction != EnumFilesAction.Nothing,
                     ByDate = config.OthersAction == EnumFilesAction.DeleteOld,

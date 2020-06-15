@@ -4,14 +4,19 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
+using System.Linq;
 
 namespace Tweak
 {
     internal static class Program
     {
         public const string TaskName = "Tweak";
+
+        private static readonly SecurityIdentifier User = WindowsIdentity.GetCurrent().User;
         
         private static readonly Dictionary<EnumKnownRegistry, RegistryValue> RegistryValues
             = new Dictionary<EnumKnownRegistry, RegistryValue>
@@ -39,38 +44,44 @@ namespace Tweak
                 }
             };
 
-        private static readonly Dictionary<EnumKnownFolder, DirectoryInfo> DirectoryInfos
-            = new Dictionary<EnumKnownFolder, DirectoryInfo>
+        private static readonly Dictionary<EnumKnownDirectories, DirectoryInfo> DirectoryInfos
+            = new Dictionary<EnumKnownDirectories, DirectoryInfo>
             {
                 {
-                    EnumKnownFolder.Desktop,
+                    EnumKnownDirectories.Desktop,
                     new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
                 },
                 {
-                    EnumKnownFolder.Documents,
+                    EnumKnownDirectories.Documents,
                     new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments))
                 },
                 {
-                    EnumKnownFolder.Downloads,
+                    EnumKnownDirectories.Downloads,
                     GetDirectoryInfoByGuid(new Guid("{374DE290-123F-4565-9164-39C4925E467B}"))
                 },
                 {
-                    EnumKnownFolder.Music,
+                    EnumKnownDirectories.Music,
                     new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic))
                 },
                 {
-                    EnumKnownFolder.Pictures,
+                    EnumKnownDirectories.Pictures,
                     new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
                 },
                 {
-                    EnumKnownFolder.Temp,
+                    EnumKnownDirectories.Temp,
                     new DirectoryInfo(Path.GetTempPath())
                 },
                 {
-                    EnumKnownFolder.InternetCache,
+                    EnumKnownDirectories.InternetCache,
                     new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache))
                 }
             };
+        
+        public static readonly FileSystemAccessRule AccessRule = User == null ? null : new FileSystemAccessRule(
+            User,
+            FileSystemRights.CreateFiles | FileSystemRights.CreateDirectories | FileSystemRights.WriteData,
+            AccessControlType.Deny
+        );
 
         [STAThread]
         public static void Main(string[] args)
@@ -81,6 +92,19 @@ namespace Tweak
             Application.Run();
         }
         
+        public static bool HasAccessRule(EnumKnownDirectories enumKnownDirectories)
+        {
+            return GetDirectoryInfo(enumKnownDirectories)
+                .GetAccessControl()
+                .GetAccessRules(true, false, User.GetType())
+                .Cast<FileSystemAccessRule>()
+                .Any(
+                    item => item.FileSystemRights == AccessRule.FileSystemRights
+                           && item.AccessControlType == AccessRule.AccessControlType
+                           && item.IdentityReference == AccessRule.IdentityReference
+                );
+        }
+
         public static string GetUuid()
         {
             var process = new Process
@@ -129,9 +153,9 @@ namespace Tweak
             return RegistryValues[enumKnownRegistry];
         }
 
-        public static DirectoryInfo GetDirectoryInfo(EnumKnownFolder enumKnownFolder)
+        public static DirectoryInfo GetDirectoryInfo(EnumKnownDirectories enumKnownDirectories)
         {
-            return DirectoryInfos[enumKnownFolder];
+            return DirectoryInfos[enumKnownDirectories];
         }
 
         private static DirectoryInfo GetDirectoryInfoByGuid(Guid guid, bool defaultUser = false)

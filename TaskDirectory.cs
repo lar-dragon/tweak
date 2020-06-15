@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
+using System.Windows.Forms;
 
 namespace Tweak
 {
@@ -13,7 +12,23 @@ namespace Tweak
         
         private readonly IEnumerable<FileInfo> _files;
 
-        public ulong Weight { get; }
+        private ulong _weight;
+
+        public ulong Weight {
+            get
+            {
+                if (!Delete & !Move)
+                    return (ulong) (Readonly ? 4 : 0);
+
+                if (_weight == default)
+                    _weight = _files.Aggregate<FileInfo, ulong>(
+                        0,
+                        (current, fileInfo) => current + (ulong) fileInfo.Length
+                    );
+
+                return _weight;
+            }
+        }
 
         public bool Readonly { get; set; }
         
@@ -29,57 +44,63 @@ namespace Tweak
         {
             _directoryInfo = directoryInfo;
             _files = directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories);
-            Weight = _files.Aggregate<FileInfo, ulong>(0, (current, fileInfo) => current + (ulong) fileInfo.Length);
         }
         
         public void Apply()
         {
             var date = DateTime.Now.AddDays(Older);
             File.SetAttributes(_directoryInfo.FullName, _directoryInfo.Attributes & ~FileAttributes.ReadOnly);
-            foreach (var file in _files)
+            if (!Delete & !Move)
             {
-                if (
-                    file.Attributes.HasFlag(FileAttributes.ReadOnly)
-                    || file.Attributes.HasFlag(FileAttributes.System)
-                    || file.Attributes.HasFlag(FileAttributes.Hidden)
-                ) continue;
-
-                if (Delete && (!ByDate || file.LastWriteTime < date))
-                    file.Delete();
-                else if (Move)
+                foreach (var file in _files)
                 {
-                    var to = Program.GetDirectoryInfo(EnumKnownFolder.Documents).FullName;
-                    var sub = GetRelativePathTo(_directoryInfo, file);
-                    var target = Path.Combine(to, sub);
-                    new FileInfo(target).Directory?.Create();
-                    file.MoveTo(target);
+                    if (
+                        file.Attributes.HasFlag(FileAttributes.ReadOnly)
+                        || file.Attributes.HasFlag(FileAttributes.System)
+                        || file.Attributes.HasFlag(FileAttributes.Hidden)
+                    ) continue;
+
+                    try
+                    {
+                        /*if (Delete && (!ByDate || file.LastWriteTime < date))
+                            file.Delete();
+                        else*/ if (Move)
+                        {
+                            var to = Program.GetDirectoryInfo(EnumKnownDirectories.Documents).FullName;
+                            var sub = GetRelativePathTo(_directoryInfo, file);
+                            var target = Path.Combine(to, sub);
+                            new FileInfo(target).Directory?.Create();
+                            file.MoveTo(target);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
+                }
+                
+                DeleteEmptyDirs(_directoryInfo.FullName);
+            }
+
+            try
+            {
+                if (Readonly)
+                {
+                    File.SetAttributes(_directoryInfo.FullName, _directoryInfo.Attributes | FileAttributes.ReadOnly);
+                    var access = _directoryInfo.GetAccessControl();
+                    access.AddAccessRule(Program.AccessRule);
+                    _directoryInfo.SetAccessControl(access);
+                }
+                else
+                {
+                    var access = _directoryInfo.GetAccessControl();
+                    access.RemoveAccessRuleSpecific(Program.AccessRule);
+                    _directoryInfo.SetAccessControl(access);
                 }
             }
-
-            if (Move || Delete)
-                DeleteEmptyDirs(_directoryInfo.FullName);
-
-            var user = WindowsIdentity.GetCurrent().User;
-            if (user == null)
-                return;
-            
-            var rule = new FileSystemAccessRule(
-                user,
-                FileSystemRights.CreateFiles | FileSystemRights.CreateDirectories | FileSystemRights.WriteData,
-                AccessControlType.Deny
-            );
-            if (Readonly)
+            catch (Exception exception)
             {
-                File.SetAttributes(_directoryInfo.FullName, _directoryInfo.Attributes | FileAttributes.ReadOnly);
-                var access = _directoryInfo.GetAccessControl();
-                access.AddAccessRule(rule);
-                _directoryInfo.SetAccessControl(access);
-            }
-            else
-            {
-                var access = _directoryInfo.GetAccessControl();
-                access.RemoveAccessRuleSpecific(rule);
-                _directoryInfo.SetAccessControl(access);
+                MessageBox.Show(exception.Message);
             }
         }
 

@@ -70,7 +70,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ProgressForm";
-            this.Text = "Прогресс очистки";
+            this.Text = "Прогресс отчистки";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ProgressForm_FormClosed);
             this.Load += new System.EventHandler(this.ProgressForm_Load);
             this.ResumeLayout(false);

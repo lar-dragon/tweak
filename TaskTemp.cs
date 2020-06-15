@@ -18,7 +18,7 @@ namespace Tweak
         public TaskTemp()
         {
             _files = Program
-                .GetDirectoryInfo(EnumKnownFolder.Temp)
+                .GetDirectoryInfo(EnumKnownDirectories.Temp)
                 .EnumerateFiles("*", SearchOption.AllDirectories);
             Weight = _files
                 .Aggregate<FileInfo, ulong>(0, (current, fileInfo) => current + (ulong) fileInfo.Length);
