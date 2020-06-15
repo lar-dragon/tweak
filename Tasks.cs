@@ -134,7 +134,16 @@ namespace Tweak
 
         private void AddTask(ITask task)
         {
-            Total += task.Weight;
+            try
+            {
+                Total += task.Weight;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                Total += 4;
+            }
+
             _tasks.Add(task);
         }
         

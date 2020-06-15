@@ -10,23 +10,38 @@ namespace Tweak
     {
         private readonly DirectoryInfo _directoryInfo;
         
-        private readonly IEnumerable<FileInfo> _files;
+        private IEnumerable<FileInfo> _files;
 
         private ulong _weight;
+
+        private IEnumerable<FileInfo> Files
+        {
+            get
+            {
+                return _files ?? (
+                    _files = _directoryInfo
+                    .EnumerateFiles("*", SearchOption.AllDirectories)
+                    .Where(
+                        file => !file.Attributes.HasFlag(FileAttributes.ReadOnly)
+                                && !file.Attributes.HasFlag(FileAttributes.System)
+                                && !file.Attributes.HasFlag(FileAttributes.Hidden)
+                    )
+                );
+            }
+        }
 
         public ulong Weight {
             get
             {
-                if (!Delete & !Move)
+                if (!Delete && !Move)
                     return (ulong) (Readonly ? 4 : 0);
 
-                if (_weight == default)
-                    _weight = _files.Aggregate<FileInfo, ulong>(
+                return _weight != default
+                    ? _weight
+                    : _weight = Files.Aggregate<FileInfo, ulong>(
                         0,
                         (current, fileInfo) => current + (ulong) fileInfo.Length
                     );
-
-                return _weight;
             }
         }
 
@@ -43,28 +58,21 @@ namespace Tweak
         public TaskDirectory(DirectoryInfo directoryInfo)
         {
             _directoryInfo = directoryInfo;
-            _files = directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories);
         }
         
         public void Apply()
         {
             var date = DateTime.Now.AddDays(Older);
             File.SetAttributes(_directoryInfo.FullName, _directoryInfo.Attributes & ~FileAttributes.ReadOnly);
-            if (!Delete & !Move)
+            if (Delete || Move)
             {
-                foreach (var file in _files)
+                foreach (var file in Files)
                 {
-                    if (
-                        file.Attributes.HasFlag(FileAttributes.ReadOnly)
-                        || file.Attributes.HasFlag(FileAttributes.System)
-                        || file.Attributes.HasFlag(FileAttributes.Hidden)
-                    ) continue;
-
                     try
                     {
-                        /*if (Delete && (!ByDate || file.LastWriteTime < date))
+                        if (Delete && (!ByDate || file.LastWriteTime < date))
                             file.Delete();
-                        else*/ if (Move)
+                        else if (Move)
                         {
                             var to = Program.GetDirectoryInfo(EnumKnownDirectories.Documents).FullName;
                             var sub = GetRelativePathTo(_directoryInfo, file);
